@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Personalized E-Card</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .card-container {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 600px;
+            margin: 50px auto;
+        }
+
+        .card {
+            width: 100%;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.6s ease;
+            transform-style: preserve-3d;
+        }
+
+        .card {
+            font-family: 'Courier New', Courier, monospace, sans-serif;
+            padding: 20px;
+            color: white;
+            border-radius: 10px;
+            background: linear-gradient(270deg, #ff6ec4, #7873f5, #0b89a8, #0cebf3, #a234c4);
+            background-size: 800% 800%;
+            animation: gradientShift 10s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* .card-container:hover .card {
+            transform: rotateY(10deg) rotateX(5deg);
+        } */
+
+        .card h2 {
+            color: #ff69b4;
+            text-align: center;
+        }
+
+        .card p {
+            color: #333;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card-container">
+        <div class="card" id="tiltcard">
+            <h2>Happy Rakshabandhan, CHUTKI PRIYAANSHI!</h2>
+            <p>Dear sister,</p>
+            <p>On this special day, I want to tell you how much you mean to me. You're not just my sister, but also my
+                best friend and confidant. Your love, support, and the bond we share are priceless to me.</p>
+            <p>Though we may be apart, my love for you knows no distance. I cherish all our memories and look forward to
+                creating many more.</p>
+            <p>May this Rakshabandhan bring you joy, success, and all the happiness in the world.</p>
+            <p>With all my love and blessings,</p>
+            <p>Tera VEERU</p>
+        </div>
+    </div>
+    <a href="photo.html" class="glow-button">Go To Album Scene</a>
+
+    <button class="glow-button" id="showMusicPlayerBtn">Play A Music</button>
+    <div class="music-player-inline" id="musicPlayerInline" style="display:none;">
+        <h3>Music Player</h3>
+        <audio id="musicAudio" src="assets/audio/chutki.mp3" preload="auto"></audio>
+        <div class="controls">
+            <button id="sidebarPlayPause">Play</button>
+            <div class="seek-row">
+                <span id="currentTime">0:00</span>
+                <input type="range" id="seekBar" value="0" min="0" max="100">
+                <span id="duration">0:00</span>
+            </div>
+            <div class="volume-row">
+                <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="1">
+                <span id="volumePercent">100%</span>
+            </div>
+        </div>
+    </div>
+    <div id="musicMsg" class="music-msg" style="display:none;">Please wait until the song is complete</div>
+    <style>
+        .music-player-inline {
+            width: 100%;
+            max-width: 400px;
+            margin: 30px auto 0 auto;
+            background: rgba(34,34,34,0.65);
+            color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.15);
+            padding: 24px 18px 18px 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            backdrop-filter: blur(2px);
+            transition: opacity 0.4s;
+        }
+        .music-msg {
+            width: 100%;
+            max-width: 400px;
+            margin: 12px auto 0 auto;
+            background: rgba(255,255,255,0.15);
+            color: #ff69b4;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1em;
+            padding: 10px 0 10px 0;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(1px);
+        }
+        .music-player-inline h3 {
+            margin-bottom: 18px;
+            color: #ff69b4;
+        }
+        .music-player-inline .controls {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 0;
+        }
+        .music-player-inline button {
+            width: 100%;
+            margin: 0 auto;
+        }
+        .seek-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+        }
+        #seekBar {
+            flex: 1;
+        }
+        .volume-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+        }
+        #volumeBar {
+            flex: 1;
+        }
+        #currentTime, #duration, #volumePercent {
+            font-size: 0.98em;
+            color: #ff69b4;
+            min-width: 38px;
+            text-align: center;
+        }
+        #sidebarPlayPause {
+            background: #0cebf3;
+            color: #222;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+        #seekBar {
+            accent-color: #ff69b4;
+        }
+        #volumeBar {
+            accent-color: #0cebf3;
+        }
+        @media (max-width: 500px) {
+            .music-player-inline {
+                max-width: 98vw;
+                padding: 14px 4vw 12px 4vw;
+            }
+        }
+    </style>
+
+
+    <script>
+        const card = document.getElementById('tiltcard');
+        const container = document.querySelector('.card-container');
+
+        container.addEventListener('mousemove', tiltCard);
+        container.addEventListener('mouseleave', resetTilt);
+        container.addEventListener('touchmove', tiltCard);
+        container.addEventListener('touchend', resetTilt);
+
+        function tiltCard(e) {
+            let x, y;
+            if (e.type === 'touchmove') {
+                e.preventDefault(); // Prevent scrolling on touch devices
+                const touch = e.touches[0];
+                x = touch.clientX;
+                y = touch.clientY;
+            } else {
+                x = e.clientX;
+                y = e.clientY;
+            }
+
+            const rect = container.getBoundingClientRect();
+            const containerX = x - rect.left;
+            const containerY = y - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const tiltX = (containerY - centerY) / 10;
+            const tiltY = (centerX - containerX) / 10;
+
+            card.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+        }
+
+        function resetTilt() {
+            card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        }
+
+        // --- Music Player Logic (Show/Hide, Transparent, Message) ---
+        const showMusicPlayerBtn = document.getElementById('showMusicPlayerBtn');
+        const musicPlayerInline = document.getElementById('musicPlayerInline');
+        const musicMsg = document.getElementById('musicMsg');
+        const musicAudio = document.getElementById('musicAudio');
+        const sidebarPlayPause = document.getElementById('sidebarPlayPause');
+        const seekBar = document.getElementById('seekBar');
+        const volumeBar = document.getElementById('volumeBar');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationEl = document.getElementById('duration');
+        const volumePercentEl = document.getElementById('volumePercent');
+
+        // Format time in mm:ss
+        function formatTime(sec) {
+            if (isNaN(sec)) return '0:00';
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return `${m}:${s.toString().padStart(2, '0')}`;
+        }
+
+        // Show player and message on button click, start music
+        showMusicPlayerBtn.addEventListener('click', () => {
+            musicPlayerInline.style.display = '';
+            musicMsg.style.display = '';
+            musicAudio.currentTime = 0;
+            musicAudio.play();
+            sidebarPlayPause.textContent = 'Pause';
+        });
+
+        // Play/Pause toggle
+        sidebarPlayPause.addEventListener('click', () => {
+            if (musicAudio.paused) {
+                musicAudio.play();
+                sidebarPlayPause.textContent = 'Pause';
+            } else {
+                musicAudio.pause();
+                sidebarPlayPause.textContent = 'Play';
+            }
+        });
+
+        // Hide player and message when song ends
+        musicAudio.addEventListener('ended', () => {
+            musicPlayerInline.style.display = 'none';
+            musicMsg.style.display = 'none';
+            sidebarPlayPause.textContent = 'Play';
+        });
+
+        // Update seek bar and time
+        musicAudio.addEventListener('timeupdate', () => {
+            seekBar.value = (musicAudio.currentTime / musicAudio.duration) * 100 || 0;
+            currentTimeEl.textContent = formatTime(musicAudio.currentTime);
+        });
+        // Set duration when loaded
+        musicAudio.addEventListener('loadedmetadata', () => {
+            durationEl.textContent = formatTime(musicAudio.duration);
+        });
+        seekBar.addEventListener('input', () => {
+            musicAudio.currentTime = (seekBar.value / 100) * musicAudio.duration;
+        });
+
+        // Volume control and percent
+        function updateVolumePercent() {
+            volumePercentEl.textContent = Math.round(musicAudio.volume * 100) + '%';
+        }
+        volumeBar.addEventListener('input', () => {
+            musicAudio.volume = volumeBar.value;
+            updateVolumePercent();
+        });
+        // Set initial volume and percent
+        musicAudio.volume = 1;
+        updateVolumePercent();
+    </script>
+</body>
+
+</html>
